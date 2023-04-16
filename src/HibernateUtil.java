@@ -15,19 +15,10 @@ public class HibernateUtil {
     static {
         try {
             if (sessionFactory == null) {
-                StandardServiceRegistryBuilder standardServiceRegistryBuilder
-                        = new StandardServiceRegistryBuilder();
-                Map<String, String> databaseConfiguration = new HashMap<>();
-                databaseConfiguration.put(Environment.URL,
-                        "jdbc:mysql://localhost:3306/asd_1?createDatabaseIfNotExist=true");
-                databaseConfiguration.put(Environment.USER, "root");
-                databaseConfiguration.put(Environment.PASS, "1234");
-                databaseConfiguration.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                databaseConfiguration.put(Environment.DIALECT, "org.hibernate.dialect.MySQL57Dialect");
-                standardServiceRegistryBuilder.applySettings(databaseConfiguration);
-
                 standardServiceRegistry
-                        = standardServiceRegistryBuilder.build();
+                        = new StandardServiceRegistryBuilder()
+                        .configure()
+                        .build();
                 MetadataSources metadataSources = new MetadataSources(standardServiceRegistry);
                 Metadata metadata = metadataSources.getMetadataBuilder().build();
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
